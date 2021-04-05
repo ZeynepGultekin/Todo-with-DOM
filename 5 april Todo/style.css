@@ -1,0 +1,24 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+span{
+position: absolute;
+right: 0;
+top: 1px;
+}
+.add-btn{
+    margin-right: 5px;
+}
+
+.fa-plus-square{
+    font-size: 1.3rem;
+}
+
+select{
+    width:40%;
+}
+input{
+    width:56%
+}
