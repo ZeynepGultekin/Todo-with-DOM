@@ -9,7 +9,8 @@ const spanElement = document.querySelector('span');
 
 //EventListeners
 addButton.addEventListener('click',addTodo);
-//filterOption.addEventListener('click', filterTodo);
+filterOption.addEventListener('click', filterTodo);
+
 
 //Functions 
 function addTodo(event){
@@ -19,9 +20,6 @@ function addTodo(event){
     }
     else{
         //create elements
-        todoDiv.classList.add('card-body');
-        todoDiv.appendChild(ulElement);
-        
         const liElement = document.createElement('li');
         liElement.classList.add('list-group-item');
         liElement.innerHTML = todoInput.value;
@@ -65,17 +63,42 @@ function deleteCheckEdit(event){
             event.target.parentElement.parentElement.remove();
         }
         else if(a[i].match('edit-btn')){
-            var editValue = prompt('edit the selected item');
+            var editValue = prompt('edit the selected item',event.target.parentElement.parentElement.firstChild.nodeValue);
             //console.log(event.target.parentElement.parentElement.firstChild.nodeValue);
             event.target.parentElement.parentElement.firstChild.nodeValue = editValue;  
         }
         else if(a[i].match('complete-btn')){
         event.target.parentElement.parentElement.classList.toggle('checked');
-        }
-
-            
+        }     
     }
- 
-    
+}
+
+function filterTodo(event){
+    const allTodo = ulElement.childNodes;
+    console.log(allTodo);
+
+    allTodo.forEach(todo=>{
+        console.log(event.target.value);
+        switch(event.target.value){
+            case "all":
+                todo.style.display = "flex";
+                break;
+            case "completed":
+                if(todo.classList.contains("checked")){
+                    todo.style.display = "flex";
+                }
+                else{
+                    todo.style.display = "none";
+                }
+                break;
+            case "uncompleted":
+                if(!todo.classList.contains("checked")){
+                    todo.style.display = "flex";
+                }
+                else{
+                    todo.style.display = "none";
+                } 
+        }
+    });
 }
 
