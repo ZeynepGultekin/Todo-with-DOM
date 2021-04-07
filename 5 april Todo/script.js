@@ -2,24 +2,26 @@ const todoInput = document.querySelector('.todo-input');
 const addButton = document.querySelector('.add-btn');
 const todoDiv = document.querySelector('.todo-container');
 const filterOption = document.querySelector('.filter-todo');
-
-//create ul
-const ulElement = document.createElement('ul');
-ulElement.classList.add('list-group','todo-list');
+const ulElement = document.querySelector('ul');
+const spanElement = document.querySelector('span');
 
 
 
-//Event listener 
-addButton.addEventListener('click',function(event){
+//EventListeners
+addButton.addEventListener('click',addTodo);
+//filterOption.addEventListener('click', filterTodo);
 
+//Functions 
+function addTodo(event){
+    event.preventDefault();
     if(todoInput.value === ""){
         alert("You didn't write any TODO!")
     }
     else{
         //create elements
-        todoDiv.classList.add('card');
+        todoDiv.classList.add('card-body');
         todoDiv.appendChild(ulElement);
-
+        
         const liElement = document.createElement('li');
         liElement.classList.add('list-group-item');
         liElement.innerHTML = todoInput.value;
@@ -45,5 +47,35 @@ addButton.addEventListener('click',function(event){
         spanElement.appendChild(editButton);
         spanElement.appendChild(checkButton);
         spanElement.appendChild(deleteButton);
+        
+        spanElement.addEventListener('click',deleteCheckEdit);
+        
     }
-});
+};
+
+function deleteCheckEdit(event){
+    //event.preventDefault();
+    //console.log(event.target);
+    //event.target = span element;
+
+    let a = event.target.classList;
+    //console.log(a);
+    for(let i =0; i < a.length; i++){
+        if(a[i].match('delete-btn')){
+            event.target.parentElement.parentElement.remove();
+        }
+        else if(a[i].match('edit-btn')){
+            var editValue = prompt('edit the selected item');
+            //console.log(event.target.parentElement.parentElement.firstChild.nodeValue);
+            event.target.parentElement.parentElement.firstChild.nodeValue = editValue;  
+        }
+        else if(a[i].match('complete-btn')){
+        event.target.parentElement.parentElement.classList.toggle('checked');
+        }
+
+            
+    }
+ 
+    
+}
+
